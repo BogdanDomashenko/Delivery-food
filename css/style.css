@@ -32,7 +32,7 @@ body{
     background-position: left 11px center;
 }
 
-.input-address{   
+.input-address {   
     width: 690px;
     height: 40px;
     color: #BFBFBF;
@@ -40,11 +40,21 @@ body{
     
 }
 
-.input-search{
+.input-search {
     background-image: url(../img/search.svg);
     width: 306px;
     height: 34px;
     margin-left: auto;
+}
+
+.invalid-input {
+    border: 1px solid #d63b3b;
+}
+
+.auth-msg {
+    color: #d63b3b;
+    text-align: right;
+    padding-top: 20px;
 }
 
 .buttons{
@@ -73,6 +83,12 @@ body{
 .button-primary{
     background: #1890FF;
     border: 1px solid #1890FF;
+    color: #fff;
+}
+
+.button-red {
+    background: #d63b3b;
+    border: 1px solid #d63b3b;
     color: #fff;
 }
 
@@ -421,6 +437,28 @@ margin-right: 4px;
     border-radius: 5px;
     color: #FFFFFF;
     padding: 15px 20px;
+}
+
+.modal-auth-dialog {
+    max-width: 300px;
+}
+
+.modal-auth-dialog .modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-auth{
+    padding-left: 10px;
+    height: 34px;
+}
+
+#input-password {
+    margin-top: 20px;
+}
+
+#userName {
+    font-size: 24px;
 }
 
 @media (max-width: 1366px) {
