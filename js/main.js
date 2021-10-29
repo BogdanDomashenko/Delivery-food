@@ -18,6 +18,12 @@ function toggleModalAuth() {
     loginInput.classList.remove('invalid-input');
     inputPassword.classList.remove('invalid-input');
     authMsg.textContent = '';
+    if (modalAuth.classList.contains("is-open")) {
+        disabledScroll();
+    }
+    else {
+        enabledScroll();
+    }
 }
 
 
@@ -65,6 +71,11 @@ function notAutorized() {
 
     buttonAuth.addEventListener('click', toggleModalAuth);
     loginForm.addEventListener('submit', logIn);
+    modalAuth.addEventListener('click', function(event) {
+        if (event.target.classList.contains('is-open')) {
+            toggleModalAuth();
+        }
+    });
 }
 
 function checkAuth() {
