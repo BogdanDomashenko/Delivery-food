@@ -52,10 +52,12 @@ function notAutorized() {
         event.preventDefault();
         login = loginInput.value;
         password = inputPassword.value;
+        loginInput.classList.remove('invalid-input');
+        inputPassword.classList.remove('invalid-input');
 
         if(login && password) {
             localStorage.setItem('gloDelivery', login);
-
+            
             toggleModalAuth();
             buttonAuth.removeEventListener('click', toggleModalAuth);
             loginForm.removeEventListener('submit', logIn);
@@ -63,9 +65,9 @@ function notAutorized() {
             checkAuth();
         }
         else {
-            loginInput.classList.add('invalid-input');
-            inputPassword.classList.add('invalid-input');
             authMsg.textContent = 'Поля должны быть заполнены';
+            if(!login) loginInput.classList.add('invalid-input');
+            if(!password) inputPassword.classList.add('invalid-input');
         }
     }
 
