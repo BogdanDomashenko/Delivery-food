@@ -208,7 +208,7 @@ margin-right: 4px;
     flex-wrap: wrap;
 }
 
-.restaurants .card-info {
+.cards-block .card-info {
     min-height: 120px;
 }
 
@@ -459,6 +459,14 @@ margin-right: 4px;
 
 #userName {
     font-size: 24px;
+}
+
+.hidden {
+    display: none;
+}
+
+.logoHref {
+    cursor: pointer;
 }
 
 @media (max-width: 1366px) {

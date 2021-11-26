@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <header class="header">
-            <a href="index.html"><img src="img/logo.svg" alt="Delivery Food" class="logo"></a>
+            <a class="logoHref"><img src="img/logo.svg" alt="Delivery Food" class="logo"></a>
             <input type="text" class="input input-address" placeholder="Адрес доставки">
             <div class="buttons">
                 <button class="button button-primary button-auth"> 
@@ -36,24 +36,27 @@
     
     <main class="main">
         <div class="container">
-            <span id="userName"></span>
-            <section class="promo">
-                <h1 class="promo-title">Онлайн-сервис <br/> доставки еды на дом</h1>
-                <p class="promo-text">
-                        Блюда из любимого ресторана привезет курьер в перчатках, маске и с антисептиком
-                </p>
+
+            <section class="container-promo">
+                <span id="userName"></span>
+                <section class="promo">
+                    <h1 class="promo-title">Онлайн-сервис <br/> доставки еды на дом</h1>
+                    <p class="promo-text">
+                            Блюда из любимого ресторана привезет курьер в перчатках, маске и с антисептиком
+                    </p>
+                </section>
             </section>
-    
-            <section class="restaurants">
+
+            <section class="restaurants cards-block">
                 <div class="section-heading">
                     <h2 class="section-title">
                         Рестораны
                     </h2>
                     <input type="text" class="input input-search" placeholder="Поиск блюд и ресторанов">
                 </div>
-                <div class="cards">
-                    <a href="restaurant.html" class="card wow animate__animated animate__fadeInUp" data-wow-delay="0">
-                        <img src="img/pizza-plus.png" alt="image" class="card-image">
+                <div class="cards cards-restaurants">
+                    <!-- <a href="restaurant.html" class="card card-restaurant wow animate__animated animate__fadeInUp" data-wow-delay="0">
+                        <!-- <img src="img/pizza-plus.png" alt="image" class="card-image">
                         <div class="card-text">
                             <div class="card-heading">
                                 <h3 class="card-title">
@@ -75,9 +78,9 @@
                                     Пицца
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="restaurant.html" class="card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+                        </div> -->
+                    <!-- </a> -->
+                    <!-- <a href="restaurant.html" class="card wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
                         <img src="img/image (1).png" alt="image" class="card-image">
                         <div class="card-text">
                             <div class="card-heading">
@@ -201,7 +204,31 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </a> -->
+                    
+                </div>
+            </section>
+
+            <section class="cards-block menu hidden">
+                <div class="section-heading">
+                    <h2 class="section-title">
+                        Тануки
+                    </h2>
+                    <div class="card-info">
+                        <div class="rating">
+                            <img src="img/star.svg" alt="star" class="rating-star">
+                            4.5
+                        </div>
+                        <div class="price">
+                            От 900 ₽
+                        </div>
+                        <div class="category">
+                            Пицца
+                        </div>
+                    </div>
+                </div>
+                <div class="cards cards-menu">
+
                     
                 </div>
             </section>
