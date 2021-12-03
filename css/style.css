@@ -124,6 +124,18 @@ margin-right: 4px;
     color: #302C34;
 }
 
+.kebab {
+    background-color: #fa7070;
+}
+
+.vegetables {
+    background-color: #b5fa70;
+}
+
+.sushi {
+    background-color: #c770fa;
+}
+
 .section-title{
     font-style: normal;
     font-weight: bold;
