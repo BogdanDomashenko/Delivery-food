@@ -134,7 +134,7 @@ function createCardReustarants(restaurant) {
                         От ${price} ₽
                     </div>
                     <div class="category">
-                        Пицца
+                        ${kitchen}
                     </div>
                 </div>
             </div>
