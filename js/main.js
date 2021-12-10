@@ -16,6 +16,8 @@ const restaurants = document.querySelector('.restaurants');
 const menu = document.querySelector('.menu');
 const logo = document.querySelector('.logoHref');
 const cardsMenu = document.querySelector('.cards-menu');
+const inputSearch = document.querySelector('.input-search');
+const pageName = document.querySelector('.page-name');
 
 
 let login = localStorage.getItem('gloDelivery');
@@ -107,7 +109,6 @@ function checkAuth() {
 }
 
 function createCardReustarants(restaurant) {
-
     const { 
         image, kitchen, 
         name, price, stars, 
@@ -210,6 +211,8 @@ function openGoods(event) {
         cardsMenu.textContent = '';
         
         if (restourant) {
+            userNameEl.classList.add('hidden');
+            pageName.classList.add('hidden');
             containerPromo.classList.add('hidden');
             restaurants.classList.add('hidden');
             menu.classList.remove('hidden');
@@ -230,6 +233,8 @@ function closeGoods() {
     containerPromo.classList.remove('hidden');
     restaurants.classList.remove('hidden');
     menu.classList.add('hidden');
+    userNameEl.classList.remove('hidden');
+    pageName.classList.add('hidden');
 }
 
 function init() {
@@ -244,7 +249,54 @@ function init() {
     
     checkAuth();
     
-    //swiper
+    inputSearch.addEventListener('keypress', function(event) {
+        if(event.charCode === 13) {
+            const value = event.target.value.trim();
+            
+            if(!value) {
+                event.target.classList.add('invalid-input');
+                setTimeout(function() {
+                    event.target.classList.remove('invalid-input');
+                },2000)
+                event.target.value = '';
+                return;
+            }
+
+            event.target.classList.remove('invalid-input');
+
+            getData('/db/partners.json').then(function(data) {
+                return data.map(function(partner) {
+                    return partner.products;
+                });
+            })
+            .then(function(linkProducts) {
+                linkProducts.forEach(function(link) {
+                    cardsMenu.textContent = '';
+
+                    getData(`./db/${link}`).then(function(data) {
+                        const resultSearch = data.filter(item => {
+                            const name = item.name.toLowerCase();
+                            return name.includes(value.toLowerCase());
+                        });
+
+                        containerPromo.classList.add('hidden');
+                        restaurants.classList.add('hidden');
+                        menu.classList.remove('hidden');
+                        userNameEl.classList.add('hidden');
+
+                        if(resultSearch.length == 0) {
+                            pageName.textContent = 'Ничего не найдено';
+                        }
+                        else {
+                            pageName.textContent = 'Результат поиска';
+                            resultSearch.forEach(createCardGood);
+                        }
+                        pageName.classList.remove('hidden');
+                    })
+                })
+            })
+        }
+    });
 
 }
 

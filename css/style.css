@@ -47,9 +47,10 @@ body{
     margin-left: auto;
 }
 
-.invalid-input {
-    border: 1px solid #d63b3b;
+.invalid-input, .invalid-input:focus {
+    outline: 1px solid #d63b3b;
 }
+
 
 .auth-msg {
     color: #d63b3b;
