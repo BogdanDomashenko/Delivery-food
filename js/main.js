@@ -18,7 +18,11 @@ const logo = document.querySelector('.logoHref');
 const cardsMenu = document.querySelector('.cards-menu');
 const inputSearch = document.querySelector('.input-search');
 const pageName = document.querySelector('.page-name');
+const cartModalBody = document.querySelector('.modal-cart .modal-body');
+const cartTotalPrice = document.querySelector('.modal-pricetag');
+const buttonClearCart = document.querySelector('#button-clear-cart');
 
+let cart = [];
 
 let login = localStorage.getItem('gloDelivery');
 
@@ -55,17 +59,17 @@ function autorized() {
         checkAuth();
     }
     console.log('авторизован');
+    cartButton.classList.remove('hidden');
     buttonAuth.style.display = "none";
     buttonLogout.style.display = "flex";
     userNameEl.textContent = "Добро пожаловать, " + login;
     buttonLogout.addEventListener('click', logOut);
-
-
 }
 
 function notAutorized() {
     buttonAuth.style.display = "flex";
     buttonLogout.style.display = "none";
+    cartButton.classList.add('hidden');
     console.log('Не авторизован');
     function logIn(event) {
         event.preventDefault();
@@ -175,12 +179,12 @@ function removeReustarantInfo() {
     document.querySelector('.menu-heading').textContent = '';
 }
 
-function createCardGood({ description, image, name, price }) {
+function createCardGood({ description, image, name, price, id }) {
     const card = document.createElement('div');
     card.className = 'card wow animate__animated animate__fadeInUp';
     card.setAttribute('data-wow-delay', 0);
+    card.id = id;
     card.insertAdjacentHTML('beforeend', `
-        <div class="card wow animate__animated animate__fadeInUp" data-wow-delay="0">
             <img src="${image}" alt="image" class="card-image">
             <div class="card-text">
                 <div class="card-heading">
@@ -194,14 +198,13 @@ function createCardGood({ description, image, name, price }) {
                     </div>
                 </div>
                 <div class="card-buttons">
-                    <button class="button button-primary">
+                    <button class="button button-primary button-add-cart">
                         <span class="button-card-text">В корзину</span>
                         <img src="img/cart2.svg" alt="shopping-cart" class="card-button-image">
                     </button>
-                    <strong class="card-price-bold">${price} ₽</strong>
+                    <strong class="card-price-bold card-price">${price} ₽</strong>
                 </div>
             </div>
-    </div>
     `);
     cardsMenu.insertAdjacentElement('beforeend', card);
 }
@@ -243,7 +246,83 @@ function closeGoods() {
     pageName.classList.add('hidden');
 }
 
+function addToCart(event) {
+    const target = event.target;
+
+    const buttonAddToCart = target.closest('.button-add-cart');
+    if(buttonAddToCart) {
+        const card = target.closest('.card');
+        const title = card.querySelector('.card-title-reg').textContent;
+        const coast = parseFloat(card.querySelector('.card-price').textContent);
+        const id = card.id;
+
+        const food = cart.find(function(item) {
+            return item.id == id;
+        });
+
+        if(food) {
+            food.count += 1;
+        }
+        else {
+            cart.push({
+                id, title, coast,
+                count: 1
+            })
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+}
+
+function renderCart() {
+    cartModalBody.textContent='';
+    cart.forEach((function ({id, title, coast, count}) {
+        const itemCart = `
+            <div class="food-row">
+                <span class="food-name">${title}</span>
+                <strong class="food-price">${coast} ₽</strong>
+                <div class="food-counter">
+                    <button class="counter-button counter-minus" data-id=${id}>-</button>
+                    <span class="counter">${count}</span>
+                    <button class="counter-button counter-plus" data-id=${id}>+</button>
+                </div>
+            </div>
+        `;
+        cartModalBody.insertAdjacentHTML('beforeend', itemCart);
+    }))
+
+    const totalPrice = cart.reduce(function (result, item) { 
+        return result += (item.coast * item.count);
+    }, 0);
+
+    cartTotalPrice.textContent = totalPrice + ' ₽';
+}
+
+function changeCount(event) {
+    const target = event.target;
+
+    if(target.classList.contains('counter-button')) {
+        const food = cart.find(item => item.id == target.dataset.id);
+        if(target.classList.contains('counter-plus'))  food.count++;
+        else if(target.classList.contains('counter-minus')) {
+            food.count--;
+            if (food.count === 0) {
+                cart.splice(cart.indexOf(food), 1);
+            }
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
+}
+
 function init() {
+    const localStorageCart = JSON.parse(localStorage.getItem('cart'));
+
+    if(localStorageCart) {
+        console.log(localStorageCart)
+        cart = localStorageCart;
+    }
+
     getData('./db/partners.json').then(function(data) {
         data.forEach(createCardReustarants)
     });
@@ -251,6 +330,12 @@ function init() {
     cardsRestaraurants.addEventListener('click', openGoods);
     logo.addEventListener('click', function() {
         closeGoods();
+    })
+
+    cartModalBody.addEventListener('click', changeCount);
+    buttonClearCart.addEventListener('click', function () {
+        cart.length = 0;
+        renderCart();
     })
     
     checkAuth();
@@ -305,6 +390,8 @@ function init() {
             })
         }
     });
+
+    cardsMenu.addEventListener('click', addToCart);
 
 }
 

@@ -5,6 +5,7 @@ const closeBtns = document.querySelectorAll('.close');
 
 
 cartButton.addEventListener('click', function(event) {
+    renderCart();
     modal.classList.add('is-open');
 });
 
