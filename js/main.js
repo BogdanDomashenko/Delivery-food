@@ -171,6 +171,10 @@ function createReustarantInfo({ stars, name, price }) {
     menu.insertAdjacentElement('afterbegin', restaurantInfo);
 }
 
+function removeReustarantInfo() {
+    document.querySelector('.menu-heading').textContent = '';
+}
+
 function createCardGood({ description, image, name, price }) {
     const card = document.createElement('div');
     card.className = 'card wow animate__animated animate__fadeInUp';
@@ -230,6 +234,8 @@ function openGoods(event) {
 }
 
 function closeGoods() {
+    removeReustarantInfo();
+    inputSearch.value = '';
     containerPromo.classList.remove('hidden');
     restaurants.classList.remove('hidden');
     menu.classList.add('hidden');
@@ -251,6 +257,7 @@ function init() {
     
     inputSearch.addEventListener('keypress', function(event) {
         if(event.charCode === 13) {
+            pageName.textContent = '';
             const value = event.target.value.trim();
             
             if(!value) {
@@ -285,7 +292,8 @@ function init() {
                         userNameEl.classList.add('hidden');
 
                         if(resultSearch.length == 0) {
-                            pageName.textContent = 'Ничего не найдено';
+                            if(pageName.textContent) return;
+                            pageName.textContent  = 'Ничего не найдено';
                         }
                         else {
                             pageName.textContent = 'Результат поиска';
